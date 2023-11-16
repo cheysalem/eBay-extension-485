@@ -10,5 +10,13 @@
     "background": {
       "service_worker": "background.js"
     },
-    "permissions": ["activeTab"]
+    "content_scripts": [
+      {
+        "js": ["content.js"],
+        "matches": [
+          "https://www.ebay.com/*"
+        ]
+      }
+    ],
+    "permissions": ["activeTab","scripting"]
 }
