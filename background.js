@@ -2,6 +2,6 @@
 
 //this is our background worker
 
-const ebay = 'https://www.ebay.com/'
+const ebay = '*://*.ebay.com/*'
 
-console.log("bckgorund")
+console.log("background")

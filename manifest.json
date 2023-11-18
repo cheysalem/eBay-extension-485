@@ -14,9 +14,13 @@
       {
         "js": ["content.js"],
         "matches": [
-          "https://www.ebay.com/*"
+          "*://*.ebay.com/*"
         ]
       }
     ],
-    "permissions": ["activeTab","scripting"]
+    "permissions": [
+      "activeTab",
+      "scripting",
+      "contextMenus"
+    ]
 }
