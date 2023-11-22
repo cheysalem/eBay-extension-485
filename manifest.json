@@ -4,8 +4,8 @@
     "version": "1.0",
     "manifest_version": 3,
     "action": {
-      "default_popup": "hello.html",
-      "default_icon": "images/hello.png"
+      "default_popup": "mainTab.html",
+      "default_icon": "images/eBlocker.png"
     },
     "background": {
       "service_worker": "background.js"
@@ -21,6 +21,12 @@
     "permissions": [
       "activeTab",
       "scripting",
-      "contextMenus"
-    ]
+      "contextMenus",
+      "storage"
+    ],
+    "options_ui":
+    {
+      "page": "options.html",
+      "open_in_tab": false
+    }
 }
