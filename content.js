@@ -1,5 +1,5 @@
 //// NMSU CS485 Fall 2023 Final Project
 
-//we might need this to add badges to blacklisted sellers
+//we will need this
 
 console.log("content")
