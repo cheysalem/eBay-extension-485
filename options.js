@@ -3,93 +3,121 @@ function buildSaveArray()
 {
     //...
     var saveArray = [];
+    var element = document.querySelector('.keyword-row');
+    for(var i = 0; i < element.length; i++)
+    {
+
+      var obj = {};
+      obj.keyword = element[i].querySelector('.keyword input').value;
+      obj.type = element[i].querySelector('.type select').value;
+      obj.replace = element[i].querySelector('.replace input').value;
+
+      // store seller into Blacklist held
+      // in chrome storage
+      saveArray.push(obj);
+    }
+
+    // update Blacklist
     saveOptions(saveArray);
 
     // Left off here...
 }
 
 // Saves options to chrome.storage
-const saveOptions = (saveArray) =>
+function saveOptions(saveArray)
 {
     
     chrome.storage.sync.set({
-        bSellerArray : saveArray
-    },() => {
-        // Update status to let user know options were saved.
-        const status = document.getElementById('status');
-        status.textContent = 'Options saved.';
-        setTimeout(() => {
-          status.textContent = '';
-        }, 750);
-      }
-    );
-};
+        keywordsArray : saveArray
+    }, function()
+    {
+      // Update status to let user know options were saved.
+      const status = document.getElementById('status');
+      status.textContent = 'Options saved.';
+      setTimeout(() => {
+        status.textContent = '';
+      }, 750);
+    });
+}
   
 // Restores select box and checkbox state using the preferences
 // stored in chrome.storage.
-const restoreOptions = () => {
+function restoreOptions(){
     chrome.storage.sync.get({
-        bSellerArray : []
-    }, (items) => {
-
-        buildListDisplay(items.bSellerArray);
-
+        keywordsArray : []
+    }, function(items){
+        buildOptDisplay(items.keywordsArray);
     });
-};
+}
 
-  function buildListDisplay(items)
+  function buildOptDisplay(items)
   {
 
     if(items.length == 0)
     {
-        document.querySelector('.addSeller').click();
+        document.querySelector('.add-keyword').click();
     }
 
     for(var i = 0; i < items.length; i++)
     {
-        //items[i]
-        if(typeof i === "object")
-        {
-            createRowWithOptions(items[i]);
-        }
+      if(typeof items[i] === "object")
+      {
+        createRowWithOptions(items[i]);
+      }
+
     }
   }
 
   function createRowWithOptions(obj)
   {
 
-    var blockedSellerRow = document.querySelector('.bSellerRow').innerHTML;
+    var keywordRow = document.querySelector('.keyword-row').innerHTML;
 
-    // Error was occurring where more lines could not be added. Commented
-    // out for now since only purpose is mostly aesthetic
-    // (makes it so first input prompt does not appear until selecting
-    // "Add seller to the Blacklist")
-    //if(typeof document.querySelector('.bSellerRow').dataset.id === 'undefined')
-    //{
-    //    document.querySelector('.bSellerRow').remove();
-    //}
-
-    // person in the video commented this out, will do so too
-    // document.querySelector('.bSellerHolder').innerHTML += blockerSellerRow;
-    var newBlockedSellerRow = document.createElement('div');
-    newBlockedSellerRow.className = 'bSellerRow';
+    // remove first item
+    if(typeof document.querySelector('.keyword-row').dataset.id === 'undefined')
+    {
+      document.querySelector('.keyword-row').remove();
+    }
+    var newRow = document.createElement('div');
+    newRow.className = 'keyword-row';
     var timestamp = Date.now();
-    newBlockedSellerRow.id = timestamp;
-    newBlockedSellerRow.innerHTML = blockedSellerRow;
-    document.querySelector('.bSellerHolder').appendChild(newBlockedSellerRow)
+    newRow.dataset.id = timestamp;
+    newRow.innerHTML = keywordRow;
+    document.querySelector('.keywords-holder').appendChild(newRow);
 
-    var newElem = document.querySelector('.bSellerHolder .bSellerRow[data-id="'+timestamp+'"]');
+    var newElem = document.querySelector('.keywords-holder .keyword-row[data-id="'+timestamp+'"]');
+    newElem.querySelector('.keyword input').value = obj.keyword;
+    newElem.querySelector('.type select').value = obj.type;
+    if(obj.type=='1')
+    {
+      newElem.querySelector('.replace').style.display = 'block';
+      newElem.querySelector('.replace input').value = obj.replace;
+    }
 
-    // Line giving errors, commented out for now
-    //newElem.querySelector('inputSeller keyword').value = obj.keyword;
+    newElem.querySelector('.type select').addEventListener('change', function(e){
+      console.log(e);
+      var element = e.target;
+      var parent = element.parentNode.parentNode;
+
+      if(element.value=='1')
+      {
+        parent.querySelector('.replace').style.display = 'block';
+      }
+      else
+      {
+        parent.querySelector('.replace').style.display = 'none';
+      }
+    });
 
   }
 
   // add event listener to button that adds seller
-  document.querySelector('.addSeller').addEventListener('click', function(){
+  document.querySelector('.add-keyword').addEventListener('click', function(){
 
     var obj = {};
     obj.keyword = "example";
+    obj.type = '1';
+    obj.replace = 'string';
 
     createRowWithOptions(obj);
 
