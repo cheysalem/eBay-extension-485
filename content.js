@@ -2,4 +2,6 @@
 
 //we will need this
 
+const ebay = '*://*.ebay.com/*';
+
 console.log("content")

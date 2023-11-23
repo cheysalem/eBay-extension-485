@@ -2,6 +2,6 @@
 
 //this is our background worker
 
-const ebay = '*://*.ebay.com/*'
+const ebay = '*://*.ebay.com/*';
 
-console.log("background")
+console.log("background");
