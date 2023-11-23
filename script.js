@@ -1,16 +1,16 @@
 console.log("---Screen Content Script---")
 chrome.storage.sync.get({
-    keywordsArray: []
+    sellersArray: []
 }, function(items){
-    replacePageWords(items.keywordsArray);
+    replacePageWords(items.sellersArray);
 });
 
-function replacePageWords(keywordsArray)
+function replacePageWords(sellersArray)
 {
 
-    for(var i = 0; i < keywordsArray.length; i++)
+    for(var i = 0; i < sellersArray.length; i++)
     {
-        replaceWord(keywordsArray[i]);
+        replaceWord(sellersArray[i]);
     }
 }
 
@@ -21,19 +21,15 @@ function replaceWord(obj)
 
     for(var i = 0; i < allElems.length; i++)
     {
-        if(allElems[i].innerText.toLowerCase().includes(obj.keyword.toLowerCase()))
+        if(allElems[i].innerText.toLowerCase().includes(obj.seller.toLowerCase()))
         {
             if(obj.type == '0')
             {
                 // remove (main one needed)
-                allElems[i].innerHTML = allElems[i].innerHTML.replace(obj.keyword, '');
+                //allElems[i].style.display = 'none';
+                allElems[i].innerHTML = allElems[i].innerHTML.replace(obj.seller, '');
             }
-            else if(obj.type == '1')
-            {
-                // replace
-                allElems[i].innerHTML = allElems[i].innerHTML.replace(obj.keyword, obj.replace);
-            }
-            else if((obj.type == '2'))
+            else if((obj.type == '1'))
             {
                 // blur
                 allElems[i].style.color = 'transparent';

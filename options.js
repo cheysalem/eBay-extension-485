@@ -3,14 +3,13 @@ function buildSaveArray()
 {
     //...
     var saveArray = [];
-    var element = document.querySelectorAll('.keyword-row');
+    var element = document.querySelectorAll('.sellerRow');
     for(var i = 0; i < element.length; i++)
     {
 
       var obj = {};
-      obj.keyword = element[i].querySelector('.keyword input').value;
+      obj.seller = element[i].querySelector('.seller input').value;
       obj.type = element[i].querySelector('.type select').value;
-      obj.replace = element[i].querySelector('.replace input').value;
 
       // store seller into Blacklist held
       // in chrome storage
@@ -27,7 +26,7 @@ function buildSaveArray()
 function saveOptions(saveArray)
 {
   chrome.storage.sync.set({
-    keywordsArray: saveArray
+    sellersArray: saveArray
   }, function()
      {
       // Update status to let user know options were saved.
@@ -45,9 +44,9 @@ function saveOptions(saveArray)
 function restoreOptions()
 {
   chrome.storage.sync.get({
-    keywordsArray: []
+    sellersArray: []
   }, function(items){
-    buildOptDisplay(items.keywordsArray);
+    buildOptDisplay(items.sellersArray);
   });
 }
 
@@ -56,7 +55,7 @@ function buildOptDisplay(items)
 
   if(items.length == 0)
   {
-    document.querySelector('.add-keyword').click();
+    document.querySelector('.addSeller').click();
   }
 
   for(var i = 0; i < items.length; i++)
@@ -70,35 +69,24 @@ function buildOptDisplay(items)
 
 function createRowWithOptions(obj, int = 0)
 {
-  // debug statement
-  console.log('build row', obj);
 
-  var keywordRow = document.querySelector('.keyword-row').innerHTML;
+  var sellRow = document.querySelector('.sellerRow').innerHTML;
 
   // remove first item
-  if(typeof document.querySelector('.keyword-row').dataset.id === 'undefined')
+  if(typeof document.querySelector('.sellerRow').dataset.id === 'undefined')
   {
-    document.querySelector('.keyword-row').remove();
+    document.querySelector('.sellerRow').remove();
   }
   var newRow = document.createElement('div');
-  newRow.className = 'keyword-row';
+  newRow.className = 'sellerRow';
   var timestamp = (Date.now() + int);
   newRow.dataset.id = timestamp;
-  newRow.innerHTML = keywordRow;
-  document.querySelector('.keywords-holder').appendChild(newRow);
+  newRow.innerHTML = sellRow;
+  document.querySelector('.sellersHolder').appendChild(newRow);
 
-  var newElem = document.querySelector('.keywords-holder .keyword-row[data-id="'+timestamp+'"]');
-  newElem.querySelector('.keyword input').value = obj.keyword;
+  var newElem = document.querySelector('.sellersHolder .sellerRow[data-id="'+timestamp+'"]');
+  newElem.querySelector('.seller input').value = obj.seller;
   newElem.querySelector('.type select').value = obj.type;
-  if(obj.type=='1')
-  {
-    newElem.querySelector('.replace').style.display = 'block';
-    newElem.querySelector('.replace input').value = obj.replace;
-  }
-  else
-  {
-    newElem.querySelector('.replace').style.display = 'none';
-  }
 
   newElem.querySelector('.type select').addEventListener('change', function(e){
 
@@ -106,15 +94,6 @@ function createRowWithOptions(obj, int = 0)
     console.log(e);
     var element = e.target;
     var parent = element.parentNode.parentNode;
-
-    if(element.value=='1')
-    {
-      parent.querySelector('.replace').style.display = 'block';
-    }
-    else
-    {
-      parent.querySelector('.replace').style.display = 'none';
-    }
   }
   );
 
@@ -124,12 +103,11 @@ function createRowWithOptions(obj, int = 0)
 }
 
 // add event listener to button that adds seller
-document.querySelector('.add-keyword').addEventListener('click', function(){
+document.querySelector('.addSeller').addEventListener('click', function(){
   
   var obj = {};
-  obj.keyword = "example";
-  obj.type = '1';
-  obj.replace = 'string';
+  obj.seller = "example";
+  obj.type = '0';
 
   createRowWithOptions(obj);
 });
