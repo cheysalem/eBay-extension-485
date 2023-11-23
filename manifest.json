@@ -7,26 +7,25 @@
       "default_popup": "mainTab.html",
       "default_icon": "images/eBlocker.png"
     },
-    "background": {
-      "service_worker": "background.js"
-    },
-    "content_scripts": [
-      {
-        "js": ["content.js"],
-        "matches": [
-          "*://*.ebay.com/*"
-        ]
-      }
-    ],
+    "host_permissions": ["<all_urls>"],
     "permissions": [
       "activeTab",
       "scripting",
       "contextMenus",
       "storage"
     ],
+    "background": {
+      "service_worker": "background.js"
+    },
     "options_ui":
     {
       "page": "options.html",
       "open_in_tab": false
-    }
-}
+    },
+    "content_scripts": [
+      {
+        "js": ["script.js"],
+        "matches": ["*://*.ebay.com/*"]
+      }
+    ]
+  }
