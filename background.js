@@ -6,6 +6,11 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 
     if (!tab.url?.startsWith("*://*.ebay.com/*")) return undefined;
 
+    // chrome.scripting.insertCSS({
+    //     files: ["disappear.css"],
+    //     target: { tabId: tab.id },
+    // });
+
     if(changeInfo.status == 'complete');
     {
         chrome.scripting.executeScript({

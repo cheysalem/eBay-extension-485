@@ -29,8 +29,14 @@
     },
     "content_scripts": [
       {
-        "js": ["script.js"],
-        "matches": ["*://*.ebay.com/*"]
+        "all_frames": true,
+        "matches": ["*://*.ebay.com/*"],
+        "js": ["script.js"]
+      },
+      {
+        "all_frames": true,
+        "matches": ["*://*.ebay.com/*"],
+        "css": ["disappear.css"]
       }
     ]
   }

@@ -47,10 +47,26 @@ function disappear(target){
 
     for (var i = 0; i < targets.length; i++){
         targets[i].style.display = 'none';
+        //was trying something
+        targets[i].classesList.add("make_disappear");
     }
 }
 
-disappear('.x-ads-placements'); //sponsored content class
+//disappear('.x-ads-placements,.x-merch-nori'); //sponsored content class
+
+// this method for removing elements is more effective (thank u shinigami eyes)
+
+function addStyleSheet(css) {
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
+}
+//add a style sheet that removes sponsored content
+addStyleSheet(`
+.x-ads-placements,.x-merch-nori{
+    display: none !important;
+}`
+);
 
 console.log('script');
 
