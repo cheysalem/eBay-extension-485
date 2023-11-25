@@ -51,22 +51,31 @@ function disappear(target){
         targets[i].classesList.add("make_disappear");
     }
 }
-
 //disappear('.x-ads-placements,.x-merch-nori'); //sponsored content class
 
 // this method for removing elements is more effective (thank u shinigami eyes)
-
+//takes a css script as a string parameter and adds it to the page
 function addStyleSheet(css) {
     const style = document.createElement('style');
     style.textContent = css;
     document.head.appendChild(style);
 }
-//add a style sheet that removes sponsored content
+//call the function to add a style sheet that removes sponsored content
+//.x-ads-placements,.x-merch-nori are the classes of the elements we want to block
 addStyleSheet(`
 .x-ads-placements,.x-merch-nori{
     display: none !important;
 }`
 );
+
+//function for counting clicks
+//i would implement a switch to turn this on/off
+document.addEventListener("click", function() {
+    // Do what you want with click event
+    console.log('click');
+    //increment a value
+    //save that value to local storage (idk how that works)
+});
 
 console.log('script');
 
