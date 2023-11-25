@@ -7,7 +7,11 @@
       "default_popup": "mainTab.html",
       "default_icon": "images/eBlocker.png"
     },
-    "host_permissions": ["*://*.ebay.com/*"],
+    "host_permissions": [
+      "*://*.ebay.com/*",
+      "*://developer.chrome.com/*",
+      "*://developer.mozilla.org/*"
+    ],
     "permissions": [
       "activeTab",
       "scripting",

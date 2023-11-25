@@ -40,3 +40,17 @@ function replaceWord(obj)
 
 }
 
+//will make the sponsored stuff disappear for now
+function disappear(target){
+
+    var targets = document.querySelectorAll(target);
+
+    for (var i = 0; i < targets.length; i++){
+        targets[i].style.display = 'none';
+    }
+}
+
+disappear('.x-ads-placements'); //sponsored content class
+
+console.log('script');
+
