@@ -20,9 +20,8 @@ function buildSaveArray()
       obj.seller = element[i].querySelector('.seller input').value;
       obj.type = element[i].querySelector('.type select').value;
 
-      // store seller into array holding
-      // all instantiated seller objects
-      // from user input
+      // store seller into Blacklist held
+      // in chrome storage
       saveArray.push(obj);
     }
 
@@ -144,3 +143,8 @@ document.addEventListener('DOMContentLoaded', restoreOptions);
 // add event listener that detects when the user presees the button to 
 // save the options entered
 document.getElementById('save').addEventListener('click', buildSaveArray);
+
+
+
+
+

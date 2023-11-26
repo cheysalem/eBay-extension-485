@@ -22,7 +22,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === 'increment') {
     // Increment the click count
     currCount++;
-
+    
     // Save the updated click count to storage
     chrome.storage.sync.set({ clickCount: currCount });
 
@@ -30,3 +30,5 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     chrome.runtime.sendMessage({ action: 'update', clickCount: currCount });
   }
 });
+
+
