@@ -1,4 +1,9 @@
 console.log("---Screen Content Script---")
+
+// fetch the list of sellers stored
+// in chrome storage to then run
+// a function that will hide information
+// for that seller
 chrome.storage.sync.get({
     sellersArray: []
 }, function(items){
@@ -8,6 +13,10 @@ chrome.storage.sync.get({
 function replacePageWords(sellersArray)
 {
 
+    // for loop to iterate through the
+    // Blacklist and run a method
+    // to hide information associated with the
+    // sellers
     for(var i = 0; i < sellersArray.length; i++)
     {
         replaceWord(sellersArray[i]);
@@ -17,16 +26,37 @@ function replacePageWords(sellersArray)
 function replaceWord(obj)
 {
 
+    // get a query that will give us all of the content
+    // on the screen that belong to the 
+    // following HTML tags
     var allElems = document.querySelectorAll('h1, h2, h3, h4, h5, p, a, caption, span, td, div, article');
 
+    // for loop to iterate through all content
+    // found on the page
     for(var i = 0; i < allElems.length; i++)
     {
+        // check if there is a match between seller name and 
+        // content on the screen
         if(allElems[i].innerText.toLowerCase().includes(obj.seller.toLowerCase()))
         {
             if(obj.type == '0')
             {
                 // remove (main one needed)
+
+                // Not reliable. Removes ALL items on the
+                // screen if seller name is found
                 //allElems[i].style.display = 'none';
+
+                // tried to implement David's function using
+                // following two methods. Neither gave
+                // noticeable results on screen. Could be using
+                // function wrong
+                //disappear(allElems[i]);
+
+                //var remItem = allElems[i].target;
+                //disappear(remItem);
+
+                // original remove code, which just removes the seller name from the item
                 allElems[i].innerHTML = allElems[i].innerHTML.replace(obj.seller, '');
             }
             else if((obj.type == '1'))
@@ -75,7 +105,13 @@ document.addEventListener("click", function() {
     console.log('click');
     //increment a value
     //save that value to local storage (idk how that works)
+
+    // Send a message to the background script to increment the click count
+    // or at least it should, but each time I try it I get
+    // an error in chrome developer IDE:
+    // "Uncaught Error: Extension context invalidated."
+
+    // commented out for now
+    //chrome.runtime.sendMessage({ action: 'increment' });
+
 });
-
-console.log('script');
-
