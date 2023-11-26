@@ -20,8 +20,9 @@ function buildSaveArray()
       obj.seller = element[i].querySelector('.seller input').value;
       obj.type = element[i].querySelector('.type select').value;
 
-      // store seller into Blacklist held
-      // in chrome storage
+      // store seller into array holding
+      // all instantiated seller objects
+      // from user input
       saveArray.push(obj);
     }
 

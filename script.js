@@ -21,6 +21,11 @@ function replacePageWords(sellersArray)
     {
         replaceWord(sellersArray[i]);
     }
+
+    for(var i = 0; i < sellersArray.length; i++)
+    {
+        replaceParentWord(sellersArray[i]);
+    }
 }
 
 function replaceWord(obj)
@@ -29,7 +34,8 @@ function replaceWord(obj)
     // get a query that will give us all of the content
     // on the screen that belong to the 
     // following HTML tags
-    var allElems = document.querySelectorAll('h1, h2, h3, h4, h5, p, a, caption, span, td, div, article');
+    var allElems = document.querySelectorAll('span');
+    // h1, h2, h3, h4, h5, p, a, caption, span, td, article
 
     // for loop to iterate through all content
     // found on the page
@@ -59,11 +65,78 @@ function replaceWord(obj)
                 // original remove code, which just removes the seller name from the item
                 allElems[i].innerHTML = allElems[i].innerHTML.replace(obj.seller, '');
             }
-            else if((obj.type == '1'))
+            else//((obj.type == '1'))
             {
                 // blur
+
                 allElems[i].style.color = 'transparent';
                 allElems[i].style.textShadow = '0 0 8px rgba(0,0,0,0.5)';
+
+                //var parentElem = allElems[i].target.parentNode;
+
+                //parentElem.style.color = 'transparent';
+                //parentElem.style.color = '0 0 8px rgba(0,0,0,0.5)';
+            }
+        }
+    }
+
+}
+
+function replaceParentWord(obj)
+{
+
+    // get a query that will give us all of the content
+    // on the screen that belong to the 
+    // following HTML tags
+    var allElems = document.querySelectorAll('div');
+    // h1, h2, h3, h4, h5, p, a, caption, span, td, article
+
+    // for loop to iterate through all content
+    // found on the page
+    for(var i = 0; i < allElems.length; i++)
+    {
+        // check if there is a match between seller name and 
+        // content on the screen
+        if(allElems[i].innerText.toLowerCase().includes(obj.seller.toLowerCase()))
+        {
+            if(obj.type == '0')
+            {
+                // remove (main one needed)
+
+                // Not reliable. Removes ALL items on the
+                // screen if seller name is found
+                //allElems[i].style.display = 'none';
+
+                // tried to implement David's function using
+                // following two methods. Neither gave
+                // noticeable results on screen. Could be using
+                // function wrong
+                //disappear(allElems[i]);
+
+                //var remItem = allElems[i].target;
+                //disappear(remItem);
+
+                // original remove code, which just removes the seller name from the item
+                allElems[i].innerHTML = allElems[i].innerHTML.replace(obj.seller, '');
+            }
+            else//((obj.type == '1'))
+            {
+
+                console.log("Current element:" + allElems[i]);
+
+                console.log("Parent element: " + allElems[i].parentNode);
+
+                allElems[i].style.color = 'transparent';
+                allElems[i].style.textShadow = '0 0 8px rgba(0,0,0,0.5)';
+                // blur
+
+                //var parentElem = allElems[i].parentNode;
+
+                //var parentHTML = document.querySelector(parentElem);
+
+                //parentHTML.style.color = 'transparent';
+                //parentHTML.style.textShadow = '0 0 8px rgba(0,0,0,0.5)';
+
             }
         }
     }
