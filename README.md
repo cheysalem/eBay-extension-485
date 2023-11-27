@@ -1,12 +1,13 @@
 ## About The Project
 
-Block-Bay is a sophisticated Chrome extension designed to empower eBay buyers by providing a user-friendly mechanism to blacklist sellers. Users can effortlessly remove or blur listings associated with unwanted sellers directly on the webpage.
+Block-Bay is a Chrome extension designed to empower eBay buyers by providing a user-friendly mechanism to blacklist sellers. Users can effortlessly remove or blur listings associated with unwanted sellers directly on the webpage.
 
 ## Technologies Used
 
 - HTML
 - JavaScript (JS)
 - Cascading Style Sheets (CSS)
+- Google Chrome 
 
 ## Getting Started
 
