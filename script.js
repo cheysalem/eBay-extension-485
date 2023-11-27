@@ -1,117 +1,115 @@
-console.log("---Screen Content Script---")
+        console.log("---Screen Content Script---");
 
-// fetch the list of sellers stored
-// in chrome storage to then run
-// a function that will hide information
-// for that seller
-chrome.storage.sync.get({
-    sellersArray: []
-}, function(items){
-    replacePageWords(items.sellersArray);
-});
-
-function replacePageWords(sellersArray)
-{
-
-    // for loop to iterate through the
-    // Blacklist and run a method
-    // to hide information associated with the
-    // sellers
-    for(var i = 0; i < sellersArray.length; i++)
-    {
-        replaceWord(sellersArray[i]);
-    }
-}
-
-function replaceWord(obj)
-{
-
-    // get a query that will give us all of the content
-    // on the screen that belong to the 
-    // following HTML tags
-    var allElems = document.querySelectorAll('h1, h2, h3, h4, h5, p, a, caption, span, td, div, article');
-
-    // for loop to iterate through all content
-    // found on the page
-    for(var i = 0; i < allElems.length; i++)
-    {
-        // check if there is a match between seller name and 
-        // content on the screen
-        if(allElems[i].innerText.toLowerCase().includes(obj.seller.toLowerCase()))
+        chrome.storage.sync.get(
         {
-            if(obj.type == '0')
-            {
-                // remove (main one needed)
+            sellersArray: [],
+        },
+        function (items) {
+            replacePageWords(items.sellersArray);
+        }
+        );
 
-                // Not reliable. Removes ALL items on the
-                // screen if seller name is found
-                //allElems[i].style.display = 'none';
+        function replacePageWords(sellersArray) {
+        // for loop to iterate through the
+        // Blacklist and run a method
+        // to hide information associated with the
+        // sellers
+        for (var i = 0; i < sellersArray.length; i++) {
+            replaceWord(sellersArray[i]);
+        }
+        } // end replacePageWords
 
-                // tried to implement David's function using
-                // following two methods. Neither gave
-                // noticeable results on screen. Could be using
-                // function wrong
-                //disappear(allElems[i]);
+        function replaceWord(obj) {
+        // get a query that will give us all of the content
+        // on the screen that belong to the
+        // following HTML tags
+        var allElems = document.querySelectorAll(".s-item__wrapper.clearfix");
 
-                //var remItem = allElems[i].target;
-                //disappear(remItem);
+        // variable to store the matching listing title
+        var matchingTitle = null;
 
-                // original remove code, which just removes the seller name from the item
-                allElems[i].innerHTML = allElems[i].innerHTML.replace(obj.seller, '');
+        // for loop to iterate through all content
+        // found on the page
+        for (var i = 0; i < allElems.length; i++) {
+            // check if there is a match between seller name and
+            // content on the screen
+            if (isSellerMatch(allElems[i], obj)) {
+            // store the listing title for later use
+            matchingTitle = getListingTitle(allElems[i]);
+
+            if (obj.type == "0") {
+                // call remove other listings with the same title
+                removeAllOtherListings(allElems, matchingTitle);
+            } else {
+                // call apply blur to other listings with the same title
+                applyBlurToOtherListings(allElems, matchingTitle);
             }
-            else if((obj.type == '1'))
-            {
-                // blur
-                allElems[i].style.color = 'transparent';
-                allElems[i].style.textShadow = '0 0 8px rgba(0,0,0,0.5)';
             }
         }
-    }
+        } // end replaceWords
 
-}
+        function isSellerMatch(element, obj) {
+        var sellerNameElement =
+            element.querySelector(".s-item__wrapper.clearfix") ||
+            element.querySelector(".s-item__seller-info");
+        // cool way to check seller and get them all
+        var allSellerElements = document.querySelectorAll(".s-item__wrapper.clearfix");
 
-//will make the sponsored stuff disappear for now
-function disappear(target){
+        if (sellerNameElement) {
+            var sellerName = sellerNameElement.innerText.toLowerCase();
+            var storedSellerName = obj.seller.toLowerCase();
 
-    var targets = document.querySelectorAll(target);
+            // Check if the seller name in sellersArray matches
+            // or if the seller's name is found in the listing
+            return (
+            sellerName.includes(storedSellerName) ||
+            storedSellerName.includes(sellerName)
+            );
+        }
+        return false;
+        }
+          
 
-    for (var i = 0; i < targets.length; i++){
-        targets[i].style.display = 'none';
-        //was trying something
-        targets[i].classesList.add("make_disappear");
-    }
-}
-//disappear('.x-ads-placements,.x-merch-nori'); //sponsored content class
+        function getListingTitle(element) {
+        // get the listing title from the element
+        var titleElement = element.querySelector(".s-item__title");
+        //   console.log("Title Name: " + titleElement);
+        return titleElement ? titleElement.innerText : "";
+        }
 
-// this method for removing elements is more effective (thank u shinigami eyes)
-//takes a css script as a string parameter and adds it to the page
-function addStyleSheet(css) {
-    const style = document.createElement('style');
-    style.textContent = css;
-    document.head.appendChild(style);
-}
-//call the function to add a style sheet that removes sponsored content
-//.x-ads-placements,.x-merch-nori are the classes of the elements we want to block
-addStyleSheet(`
-.x-ads-placements,.x-merch-nori{
-    display: none !important;
-}`
-);
+        function removeAllOtherListings(allElems, title) {
+        // remove all listings with the same title
+        for (var i = 0; i < allElems.length; i++) {
+            var currentTitle = getListingTitle(allElems[i]);
+            if (currentTitle === title) {
+            allElems[i].remove();
+            }
+        }
+        }
 
-//function for counting clicks
-//i would implement a switch to turn this on/off
-document.addEventListener("click", function() {
-    // Do what you want with click event
-    console.log('click');
-    //increment a value
-    //save that value to local storage (idk how that works)
+        function applyBlurToOtherListings(allElems, title) {
+        // apply blur to all listings with the same title
+        for (var i = 0; i < allElems.length; i++) {
+            var currentTitle = getListingTitle(allElems[i]);
+            if (currentTitle === title) {
+            allElems[i].style.filter = "blur(8px)";
+            }
+        }
+        }
 
-    // Send a message to the background script to increment the click count
-    // or at least it should, but each time I try it I get
-    // an error in chrome developer IDE:
-    // "Uncaught Error: Extension context invalidated."
+        // //function for counting clicks
+        // //i would implement a switch to turn this on/off
+        // document.addEventListener("click", function () {
+        //   // Do what you want with click event
+        //   console.log("click");
+        //   //increment a value
+        //   //save that value to local storage (idk how that works)
 
-    // commented out for now
-    //chrome.runtime.sendMessage({ action: 'increment' });
+        //   // Send a message to the background script to increment the click count
+        //   // or at least it should, but each time I try it I get
+        //   // an error in chrome developer IDE:
+        //   // "Uncaught Error: Extension context invalidated."
 
-});
+        //   // commented out for now
+        //   //chrome.runtime.sendMessage({ action: 'increment' });
+        // });

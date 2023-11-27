@@ -143,3 +143,8 @@ document.addEventListener('DOMContentLoaded', restoreOptions);
 // add event listener that detects when the user presees the button to 
 // save the options entered
 document.getElementById('save').addEventListener('click', buildSaveArray);
+
+
+
+
+
