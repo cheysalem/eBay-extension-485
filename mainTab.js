@@ -1,37 +1,117 @@
-// event listener that will detect when the
-// button to edit the Blacklist
-// is selected
-document.querySelector('#goToOptions').addEventListener('click', function() {
-  if (chrome.runtime.openOptionsPage) {
-    chrome.runtime.openOptionsPage();
-  } else {
-    window.open(chrome.runtime.getURL('options.html'));
+// NMSU CS485 Fall 2023 Final Project
+// this script handles the pop-up menu
+console.log("background");
+
+// Declare a variable to store the username
+var username;
+
+// Make buttons usable
+document.addEventListener("DOMContentLoaded", () => {
+
+  // No scroll bar got from stackoverflow
+  var styleElement = document.createElement("style");
+  styleElement.id = "remove-scroll-style";
+  styleElement.textContent =
+    "html::-webkit-scrollbar{display:none !important}" +
+    "body::-webkit-scrollbar{display:none !important}";
+  document.getElementsByTagName("body")[0].appendChild(styleElement);
+});
+
+// For eBay blacklist collapse '+' and '-' collapse
+document.addEventListener("DOMContentLoaded", function () {
+  var blacklistButton = document.getElementById("blacklist-collapse");
+
+  if (blacklistButton) {
+    blacklistButton.addEventListener("click", function () {
+      var targetId = this.getAttribute("data-target");
+      var targetElement = document.getElementById(targetId);
+
+      this.classList.toggle("active");
+
+      if (this.classList.contains("active")) {
+        console.log("'+' clicked");
+        targetElement.classList.add("active");
+      } else {
+        console.log("'-' clicked");
+        targetElement.classList.remove("active");
+      }
+    });
   }
+});
+
+// For eBay view blacklist collapse '+' and '-' collapse
+document.addEventListener("DOMContentLoaded", function () {
+  var blacklistButton = document.getElementById("view-blklist-collapse");
+  var usernameInput = document.getElementById("usernameInput");
+
+  if (blacklistButton) {
+    blacklistButton.addEventListener("click", function () {
+      var targetId = this.getAttribute("data-target");
+      var targetElement = document.getElementById(targetId);
+
+      this.classList.toggle("active");
+
+      if (this.classList.contains("active")) {
+        console.log("'+' clicked");
+        targetElement.classList.add("active");
+      } else {
+        console.log("'-' clicked");
+        targetElement.classList.remove("active");
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var blacklistContent = document.getElementById("blacklist-content");
+
+    var blacklistCollapseButton = document.getElementById("blacklist-collapse");
+
+    if (blacklistCollapseButton) {
+      blacklistCollapseButton.addEventListener("click", function () {
+        blacklistContent.classList.toggle("collapsed");
+      });
+    }
+  });
+});
+// For eBay user blacklist collapse '+' and '-' collapse
+document.addEventListener("DOMContentLoaded", function () {
+  var blacklistButton = document.getElementById("user-blklist-collapse");
+  var usernameInput = document.getElementById("usernameInput");
+
+  if (blacklistButton) {
+    blacklistButton.addEventListener("click", function () {
+      var targetId = this.getAttribute("data-target");
+      var targetElement = document.getElementById(targetId);
+
+      this.classList.toggle("active");
+
+      if (this.classList.contains("active")) {
+        console.log("'+' clicked");
+        targetElement.classList.add("active");
+      } else {
+        console.log("'-' clicked");
+        targetElement.classList.remove("active");
+      }
+    });
+  }
+
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    var blacklistContent = document.getElementById("blacklist-content");
+
+    var blacklistCollapseButton = document.getElementById("blacklist-collapse");
+
+    if (blacklistCollapseButton) {
+      blacklistCollapseButton.addEventListener("click", function () {
+        blacklistContent.classList.toggle("collapsed");
+      });
+    }
+  });
+
 });
 
 
 
-// // event listener that will run constantly as the content in the
-// // extension tab populates in order
-// // to constantly update click count
-// document.addEventListener('DOMContentLoaded', function () {
 
-//   // listen for messages from the background script
-//   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-//     if (request.action === 'update') {
-//       document.getElementById('clickCount').textContent = request.clickCount;
-//     }
-//   });
+ 
 
-//   // increment the click count when the button is clicked
-//   document.addEventListener('click', function () {
-//     chrome.runtime.sendMessage({ action: 'increment' });
-//   });
-
-//   // get the current click count from storage and update the popup
-//   chrome.storage.sync.get(['clickCount'], function (result) {
-//     const clickCount = result.clickCount || 0;
-//     document.getElementById('clickCount').textContent = clickCount;
-//   });
-
-// });

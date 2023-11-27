@@ -1,34 +1,31 @@
+// waits for elements until they are present (this is for the save )
+function buildSaveArray() {
+  // array to store sellers entered by the user
+  var saveArray = [];
 
-function buildSaveArray()
-{
-    // array to store sellers
-    // entered by user
-    var saveArray = [];
+  var elements = document.querySelectorAll('.sellerRow');
 
-    var element = document.querySelectorAll('.sellerRow');
+  // iterate through every seller the user has entered into the Blacklist
+  for (var i = 0; i < elements.length; i++) {
+    var sellerInput = elements[i].querySelector('.seller input');
+    var typeSelect = elements[i].querySelector('.type select');
 
-    // for loop to iterate through
-    // every seller the user has entered
-    // into the Blacklist
-    for(var i = 0; i < element.length; i++)
-    {
-
-      // instantiate object for 
-      // seller information
-      // and assign it to the input
+    // Check if the elements are found before accessing their values
+    if (sellerInput && typeSelect) {
+      // instantiate object for seller information and assign it to the input
       var obj = {};
-      obj.seller = element[i].querySelector('.seller input').value;
-      obj.type = element[i].querySelector('.type select').value;
+      obj.seller = sellerInput.value;
+      obj.type = typeSelect.value;
 
-      // store seller into Blacklist held
-      // in chrome storage
+      // store seller into Blacklist held in chrome storage
       saveArray.push(obj);
     }
+  }
 
-    // update Blacklist
-    saveOptions(saveArray);
-
+  // update Blacklist
+  saveOptions(saveArray);
 }
+
 
 // saves options to chrome.storage
 function saveOptions(saveArray)
@@ -123,6 +120,7 @@ function createRowWithOptions(obj, int = 0)
   });
 }
 
+
 // add event listener to detect when the button to add a seller
 // is clicked
 document.querySelector('.addSeller').addEventListener('click', function(){
@@ -134,7 +132,15 @@ document.querySelector('.addSeller').addEventListener('click', function(){
   // pass object to our function used
   // to create new seller entries
   createRowWithOptions(obj);
+
+  // Delay the scrolling to the bottom of the collapsed menu
+  setTimeout(function() {
+    var blacklistContent = document.getElementById('blacklist-content');
+    blacklistContent.scrollTop = blacklistContent.scrollHeight;
+  }, 0);
 });
+
+
   
 // add event listener that updates the options information when
 // extension tab is loaded

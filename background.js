@@ -4,8 +4,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
     // skip urls like "chrome://" to avoid extension error
     if (tab.url?.startsWith("chrome://")) return undefined;
 
-    //ok it turns out we needed this after all leave it
-    if (!tab.url?.startsWith("*://*.ebay.com/*")) return undefined;
+    //if (!tab.url?.startsWith("*://*.ebay.com/*")) return undefined;
 
     if(changeInfo.status == 'complete');
     {

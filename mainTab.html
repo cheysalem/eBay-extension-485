@@ -1,26 +1,147 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- <script></script> -->
-  <title>Block-Bay</title>
-</head>
-<body>
-  <div>
-    <h1>Block-Bay</h1>
-    <!-- some kind of option for adding a seller to the blacklist -->
-    <!-- !-- some kind of option for adding a seller to the blacklist --> 
- 
-    <!-- <button id="clickButton"><h2 >Edit Blacklist</h2></button> -->
-    <button id="goToOptions"><h2>Edit Blacklist</h2></button>
-  
-    <h3><a target="_blank" href="https://forms.gle/6rAmPH3xTk7W96iW9">User Feedback Survey</a></h3>
-    <!-- <p id="clickCount">0</p> -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./disappear.css" />
 
+    
+    <title>Block-Bay</title>
+  </head>
+  <body>
+    
+    <div>
+      <h1>Block-Bay</h1>
+      <button id="blacklist-collapse" data-target="blacklist-content">
+        Edit Blacklist
+      </button>
+      <div id="blacklist-content" class="collapsible-content">
+        <div id="sellersHolder" class="sellersHolder">
+          <div class="sellerRow">
+            <div id="space-div"></div>
+            <div class="input-item seller">
+              <label>Seller</label>
+              <input type="text" value="" placeholder="seller..." />
+            </div>
+            <div class="input-item type">
+              <label>Select Type</label>
+              <select>
+                <option value="0">Remove</option>
+                <option value="1">Blur</option>
+              </select>
+            </div>
+            
+            <div><button class="remove">Remove seller</button></div>
+          </div>
+        </div>
+       
+        <button id="save">Save</button>
+        <div id="status"></div>
+        <div>
+          <button class="addSeller">Add another seller to the Blacklist</button>
+        </div>
+      </div>
+    </div>
+    
+
+
+
+    <div id="space-div"></div>
+
+
+
+
+    <div>
+      <button id="view-blklist-collapse" data-target="view-blklist-content">
+        How To Use Block-Bay
+      </button>
+      <div id="view-blklist-content" class="view-blklist-content">
+       
+        <div id="sellersHolder" class="sellersHolder">
+          <div class="sellerRow">
+
+            <h1>How to Use Block-Bay Chrome Extension</h1>
+
+            <p><strong>Overview:</strong> Block-Bay is a Chrome extension designed to help you manage and control your online experience by allowing you to create a blacklist of sellers. Follow these simple steps to make the most of the extension.</p>
+          
+            <div class="instruction-step">
+              <p><strong>Step 1:</strong> Open the Extension</p>
+              <p>Click on the Block-Bay icon in your Chrome browser's toolbar.</p>
+            </div>
+          
+            <div class="instruction-step">
+              <p><strong>Step 2:</strong> Access Blacklist Editor</p>
+              <p>Once the extension is open, locate and click on the "Edit Blacklist" button.</p>
+            </div>
+          
+            <div class="instruction-step blacklist-editor">
+              <p><strong>Step 3:</strong> Edit Your Blacklist</p>
+              <p>You will see a section labeled "Blacklist Editor."</p>
+              <p>Each seller is represented by a row containing input fields.</p>
+              <ul>
+                <li>To add a seller, click the "Add another seller to the Blacklist" button.</li>
+                <li>Enter the seller's name in the "Seller" input field.</li>
+                <li>Select the action you want for this seller from the "Select Type" dropdown menu (e.g., "Remove" or "Blur").</li>
+                <li>To remove a seller, click the "Remove seller" button next to the seller you want to remove.</li>
+              </ul>
+              <p>Make sure to click the "Save" button to apply your changes.</p>
+            </div>
+          
+            <div class="instruction-step">
+              <p><strong>Step 4:</strong> Save Your Blacklist</p>
+              <p>After making your desired changes, click the "Save" button to save your updated blacklist.</p>
+              <p>A status message will briefly appear, confirming that your options were saved.</p>
+            </div>
+          
+            <p><strong>Additional Tips:</strong></p>
+            <ul>
+              <li>To collapse the Blacklist Editor, click the "Edit Blacklist" button again.</li>
+              <li>If you accidentally remove all sellers, do not click save and add new seller. Simply reload the page to start fresh.</li>
+
+              <!-- <li>If you encounter any issues or have questions, visit the extension's support page.</li> -->
+            </ul>
+          
+            <p>Enjoy a customized online experience with Block-Bay!</p>
+
+            
+          
+          </div>
+        </div>
+  
+       
+  
+      
+      </div>
+    </div>
+    <div id="space-div"></div>
+    <div>
+      <button id="user-blklist-collapse" data-target="user-blklist-content">
+        User Feedback Survey
+      </button>
+      <div id="user-blklist-content" class="user-blklist-content">
+       
+        <div id="sellersHolder" class="sellersHolder">
+          <div class="sellerRow">
+
+            <h3>
+              <a target="_blank" href="https://forms.gle/6rAmPH3xTk7W96iW9"
+                >User Feedback Survey</a
+              >
+            </h3>
+
+            <!-- <div><button class="remove">Remove seller</button></div> -->
+
+          
+          </div>
+        </div>
+  
+       
+  
+      
+      </div>
+    </div>
+   
     <script src="mainTab.js"></script>
-  </div>
-</body>
+    <script src="./options.js"></script>
+  </body>
 </html>
