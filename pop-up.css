@@ -424,7 +424,7 @@ body {
 
 /* Styling for the Add seller button */
 .addSeller {
-  background-color: #28a745;
+  background-color: #0056b3;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -434,12 +434,12 @@ body {
 }
 
 .addSeller:hover {
-  background-color: #218838;
+  background-color: #0056b3;
 }
 
 /* Styling for the Save button */
 #save {
-  background-color: #007bff;
+  background-color: #28a745;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -449,7 +449,7 @@ body {
 }
 
 #save:hover {
-  background-color: #0056b3;
+  background-color:#28a745; ;
 }
 
 /* deals with autoscrolling for Edit BlackList */

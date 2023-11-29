@@ -126,7 +126,7 @@ function createRowWithOptions(obj, int = 0)
 document.querySelector('.addSeller').addEventListener('click', function(){
   
   var obj = {};
-  obj.seller = "example";
+  obj.seller = "";
   obj.type = '0';
 
   // pass object to our function used
@@ -147,8 +147,18 @@ document.querySelector('.addSeller').addEventListener('click', function(){
 document.addEventListener('DOMContentLoaded', restoreOptions);
 
 // add event listener that detects when the user presees the button to 
-// save the options entered
-document.getElementById('save').addEventListener('click', buildSaveArray);
+// save the options entered and relaod ebay webpage
+document.getElementById('save').addEventListener('click', function() {
+  buildSaveArray();
+
+  // reload the eBay page after saving options
+  chrome.tabs.query({ url: '*://*.ebay.com/*' }, function(tabs) {
+    if (tabs.length > 0) {
+      chrome.tabs.reload(tabs[0].id);
+    }
+  });
+});
+
 
 
 
